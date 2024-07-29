@@ -1,0 +1,46 @@
+/* src/assets/styles/header.css */
+
+header {
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+  }
+  
+  .nav-container {
+    display: flex;
+    justify-content: space-between; /* Esto alinea el contenido a los extremos */
+    align-items: center;
+  }
+  
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    margin-right: 20px; /* Agrega espacio a la derecha del título */
+}
+  
+  .buttons-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff; /* Azul */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3; /* Azul más oscuro para hover */
+  }
+  
+  @media (max-width: 768px) {
+    .btn {
+      font-size: 14px;
+      padding: 8px 10px;
+    }
+  }
+  
