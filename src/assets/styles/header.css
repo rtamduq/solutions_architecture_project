@@ -36,6 +36,11 @@ header {
   .btn:hover {
     background-color: #0056b3; /* Azul más oscuro para hover */
   }
+
+  .header-title {
+    text-align: center;
+    margin: 0; /* Optional: remove default margin if needed */
+  }
   
   @media (max-width: 768px) {
     .btn {
