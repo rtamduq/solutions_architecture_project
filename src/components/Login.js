@@ -32,7 +32,7 @@ function Login() {
 
   return (
     <div className="login-container">
-      <h2>Login to the Book Application</h2>
+      <h2 style={{color: "#000"}}>Login to the Book Application</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">Username:</label>
