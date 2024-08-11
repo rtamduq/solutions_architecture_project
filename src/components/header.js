@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { AuthContext } from "./../Authentication/AuthContext"
 import '../assets/styles/header.css';
 import { logout } from '../services/authenticate';
 
@@ -10,9 +11,7 @@ const handleLogout=()=>{
 const Header = () => {
   // Get the current location using useLocation
   const location = useLocation();
-  
-  // Log the current pathname
-  console.log('Current route:', location.pathname);
+  const { user, signOut } = useContext(AuthContext)
 
   return (
     <header>
@@ -23,7 +22,7 @@ const Header = () => {
             {(location.pathname === '/' || location.pathname === '/signup')  && <Link to="/login" className="btn">Login</Link>}
             {(location.pathname === '/' || location.pathname === '/login') && <Link to="/signup" className="btn">Register</Link>}
             {location.pathname === '/dashboard' && 
-              <button className="btn" onClick={handleLogout}>Logout</button>}
+              <button className="btn" onClick={signOut}>Logout</button>}
           </div>
         </div>
       </nav>

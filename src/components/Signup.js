@@ -1,6 +1,6 @@
 // src/components/Signup.js
 import React, { useState } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import userpool from '../userpool';
@@ -12,6 +12,7 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailErr, setEmailErr] = useState('');
+  const [signupErr, setSignupErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
 
   const formInputChange = (formField, value) => {
@@ -65,11 +66,9 @@ const Signup = () => {
           let username = email;
           userpool.signUp(username, password, attributeList, null, (err, data) => {
             if (err) {
-              console.log(err);
-              alert("Couldn't sign up");
+              setSignupErr(err?.message || "Sign up unsuccessful");
             } else {
-              console.log(data);
-              alert('User Added Successfully');
+              alert('Sign up Successful');
               Navigate('/dashboard');
             }
           });
@@ -101,6 +100,7 @@ const Signup = () => {
         <div className='formfield'>
           <Button type='submit' variant='contained' onClick={handleClick}>Signup</Button>
         </div>
+        <Typography className="error">{signupErr}</Typography>
       </div>
     </div>
   )

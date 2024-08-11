@@ -8,31 +8,39 @@ import Books from './components/Books';
 import sampleImage from './assets/images/humber.png';
 import './assets/styles/App.css'; 
 import userpool from './userpool';
+import { AuthProvider } from './Authentication/AuthContext';
+import RouteGuard from "./RouteGuard";
 
 function App() {
 
   useEffect(()=>{
-    let user=userpool.getCurrentUser();
-      if(user){
-        <Navigate to="/dashboard" replace />
-      }
+    userpool.getCurrentUser();
   },[]);
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Header />
-        <div className="main-content">
-          <img src={sampleImage} alt="Sample" className="main-image" />
+    <AuthProvider>
+      <BrowserRouter>
+        <div className="App">
+          <Header />
+          <div className="main-content">
+            <img src={sampleImage} alt="Sample" className="main-image" />
+          </div>
+          <Routes>
+            <Route path='/' element={<Home />}/>
+            <Route path='/signup' element={<Signup />}/>
+            <Route path='/login' element={<Login />}/>
+            <Route
+              path="/dashboard"
+              element={
+                <RouteGuard>
+                  <Books/>
+                </RouteGuard>
+              }
+            />
+          </Routes>
         </div>
-        <Routes>
-          <Route path='/' element={<Home />}/>
-          <Route path='/signup' element={<Signup />}/>
-          <Route path='/login' element={<Login />}/>
-          <Route path="/dashboard" element={<Books/>}/>
-        </Routes>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
