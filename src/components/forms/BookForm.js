@@ -1,4 +1,3 @@
-// src/components/forms/BookForm.js
 import React, { useState, useEffect } from 'react';
 import './style.css';
 
@@ -6,7 +5,7 @@ const BookForm = ({ book, onSubmit, onClose }) => {
   const [title, setTitle] = useState('');
   const [authors, setAuthors] = useState('');
   const [publisher, setPublisher] = useState('');
-  const [year, setYear] = useState('');
+  const [yop, setYop] = useState('');  // Updated state for YOP
   const [imageURL, setImageURL] = useState('');
   const [id, setId] = useState(null);
 
@@ -15,14 +14,14 @@ const BookForm = ({ book, onSubmit, onClose }) => {
       setTitle(book.Title);
       setAuthors(book.Authors);
       setPublisher(book.Publisher);
-      setYear(book.Year);
+      setYop(book.YOP);  // Updated key
       setImageURL(book.ImageURL);
       setId(book.id);
     } else {
       setTitle('');
       setAuthors('');
       setPublisher('');
-      setYear('');
+      setYop('');  // Updated key
       setImageURL('');
       setId(null);
     }
@@ -35,7 +34,7 @@ const BookForm = ({ book, onSubmit, onClose }) => {
       Title: title,
       Authors: authors,
       Publisher: publisher,
-      Year: year,
+      YOP: yop,  // Updated key
       ImageURL: imageURL || 'https://via.placeholder.com/100'
     });
     onClose();
@@ -70,9 +69,9 @@ const BookForm = ({ book, onSubmit, onClose }) => {
           />
           <input
             type="number"
-            placeholder="Year"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
+            placeholder="Year of Publication"
+            value={yop}  // Updated key
+            onChange={(e) => setYop(e.target.value)}
             required
           />
           <input

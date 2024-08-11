@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import BookForm from './forms/BookForm';
 import { ToastContainer, toast } from 'react-toastify';
+import { AuthContext } from "./../Authentication/AuthContext"
 import 'react-toastify/dist/ReactToastify.css';
 import '../assets/styles/App.css'; // Ensure the path is correct
 
 const apiURL = 'https://ropcvmc5y3.execute-api.us-east-1.amazonaws.com/dev/books';
 
 const Books = () => {
+  const { user } = useContext(AuthContext)
   const [books, setBooks] = useState([]);
   const [currentBook, setCurrentBook] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,10 +48,10 @@ const Books = () => {
         { key: 'Title', value: book.Title },
         { key: 'Authors', value: book.Authors },
         { key: 'Publisher', value: book.Publisher },
-        { key: 'Year', value: book.Year },
+        { key: 'YOP', value: book.YOP },  // Updated key
         { key: 'ImageURL', value: book.ImageURL },
       ];
-
+  
       for (const { key, value } of updates) {
         const response = await fetch(apiURL, {
           method: 'PUT',
@@ -68,9 +70,8 @@ const Books = () => {
         }
       }
 
-      // Update the book in the state
       const updatedBooks = books.map(b => 
-        b.id === book.id ? { ...b, ...book } : b
+        b.id === book.id ? { ...b, image: book.ImageURL } : b
       );
       setBooks(updatedBooks);
       toast.success('Book updated successfully.');
@@ -79,6 +80,7 @@ const Books = () => {
       toast.error('Error updating book.');
     }
   };
+
 
   const handleFormSubmit = async (book) => {
     try {
@@ -95,7 +97,7 @@ const Books = () => {
             Authors: book.Authors,
             Publisher: book.Publisher,
             Title: book.Title,
-            Year: book.Year,
+            YOP: book.YOP,  // Updated key
             ImageURL: book.ImageURL,
           }),
         });
@@ -140,6 +142,8 @@ const Books = () => {
   return (
     <div>
       <h2>Books List</h2>
+      <h4 style={{color: "#fefefe"}}>Welcome user - {user?.email}</h4>
+      <h4 style={{color: "#fefefe"}}>UserId - {user?.username}</h4>
       <button onClick={() => openModal()}>Add Book</button>
       <div className="books-container">
         {books.map(book => (
@@ -148,7 +152,7 @@ const Books = () => {
             <h3>{book.Title}</h3>
             <p>by {book.Authors}</p>
             <p>Publisher: {book.Publisher}</p>
-            <p>Year: {book.Year}</p>
+            <p>Year: {book.YOP}</p>  {/* Updated key */}
             <div className="button-group">
               <button onClick={() => openModal(book)}>Edit</button>
               <button onClick={() => handleDelete(book.id)}>Delete</button>

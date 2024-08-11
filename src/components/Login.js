@@ -1,18 +1,21 @@
 // src/components/Login.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { authenticate } from '../services/authenticate';
+import { AuthContext } from "./../Authentication/AuthContext"
+
 import '../assets/styles/Login.css'; // Import the updated CSS file
 
 const Login = () => {
   const Navigate = useNavigate();
-
+  const { user, signIn } = useContext(AuthContext)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailErr, setEmailErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
   const [loginErr, setLoginErr] = useState('');
+
 
   const formInputChange = (formField, value) => {
     if (formField === "email") {
@@ -52,17 +55,17 @@ const Login = () => {
     setEmailErr("");
     setPasswordErr("");
     validation()
-      .then((res) => {
+      .then(async (res) => {
         if (res.email === '' && res.password === '') {
-          authenticate(email, password)
-            .then((data) => {
-              setLoginErr('');
+          try {
+            const result = await signIn(email, password);
+            setLoginErr('');
+            if (result?.accessToken?.jwtToken) {
               Navigate('/dashboard');
-            }, (err) => {
-              console.log(err);
-              setLoginErr(err.message);
-            })
-            .catch(err => console.log(err));
+            }
+          } catch (err) {
+            setLoginErr(err.message);
+          }
         }
       }, err => console.log(err))
       .catch(err => console.log(err));
