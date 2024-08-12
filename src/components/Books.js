@@ -143,7 +143,7 @@ const Books = () => {
     <div>
       <h2>Books List</h2>
       <h4 style={{color: "#fefefe"}}>Welcome user - {user?.email}</h4>
-      <h4 style={{color: "#fefefe"}}>UserId - {user?.username}</h4>
+      <h4 style={{color: "#fefefe"}}>Cognito UserId - {user?.username}</h4>
       <button onClick={() => openModal()}>Add Book</button>
       <div className="books-container">
         {books.map(book => (
